@@ -1,0 +1,195 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+--
+-- Host: localhost    Database: pdl
+-- ------------------------------------------------------
+-- Server version	8.0.32
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `etiqueter`
+--
+
+DROP TABLE IF EXISTS `etiqueter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `etiqueter` (
+  `images_idImage` int NOT NULL,
+  `tags_idTag` int NOT NULL,
+  PRIMARY KEY (`images_idImage`,`tags_idTag`),
+  KEY `fk_images_has_tags_tags1_idx` (`tags_idTag`),
+  KEY `fk_images_has_tags_images1_idx` (`images_idImage`),
+  CONSTRAINT `fk_images_has_tags_images1` FOREIGN KEY (`images_idImage`) REFERENCES `images` (`idImage`),
+  CONSTRAINT `fk_images_has_tags_tags1` FOREIGN KEY (`tags_idTag`) REFERENCES `tags` (`idTag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `etiqueter`
+--
+
+LOCK TABLES `etiqueter` WRITE;
+/*!40000 ALTER TABLE `etiqueter` DISABLE KEYS */;
+INSERT INTO `etiqueter` VALUES (1,2);
+/*!40000 ALTER TABLE `etiqueter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `images`
+--
+
+DROP TABLE IF EXISTS `images`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `images` (
+  `idImage` int NOT NULL AUTO_INCREMENT,
+  `nameImage` varchar(45) NOT NULL,
+  `dateCreation` datetime NOT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `iduser` int NOT NULL,
+  `statut_idStatut` int NOT NULL,
+  PRIMARY KEY (`idImage`),
+  KEY `iduser_idx` (`iduser`),
+  KEY `fk_image_statut1_idx` (`statut_idStatut`),
+  CONSTRAINT `fk_image_statut1` FOREIGN KEY (`statut_idStatut`) REFERENCES `statuts` (`idStatut`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `images`
+--
+
+LOCK TABLES `images` WRITE;
+/*!40000 ALTER TABLE `images` DISABLE KEYS */;
+INSERT INTO `images` VALUES (1,'test','2023-04-01 10:23:45','test',9,0),(3,'aube.jpg','2023-04-04 11:30:32','images\\aube.jpg',8,0),(4,'beach.jpg','2023-04-04 11:30:32','images\\beach.jpg',8,1),(5,'img1.jpg','2023-04-04 11:30:32','images\\img1.jpg',8,2),(6,'img2.jpg','2023-04-04 11:30:32','images\\sub1\\img2.jpg',8,1),(7,'Triops.jpg','2023-04-04 11:30:32','images\\Triops.jpg',8,2),(8,'test.jpg','2023-04-04 11:54:47','images\\test.jpg',8,1),(9,'test.jpg','2023-04-13 11:00:10','images/test.jpg',1,1),(10,'bebe Lynx roux.jpg','2023-04-14 11:43:04','images/bebe Lynx roux.jpg',18,0),(11,'Lynx roux.jpg','2023-04-14 11:43:32','images/Lynx roux.jpg',18,1),(12,'bebe Lynx roux.jpg','2023-04-14 11:47:05','images\\bebe Lynx roux.jpg',8,1),(13,'Lynx roux.jpg','2023-04-14 11:47:05','images\\Lynx roux.jpg',8,1),(14,'Panthère nébuleuse de Bornéo.jpg','2023-04-14 11:56:06','images/Panthère nébuleuse de Bornéo.jpg',17,1),(15,'Panthère nébuleuse de Bornéo.jpg','2023-04-14 11:57:04','images\\Panthère nébuleuse de Bornéo.jpg',8,1),(16,'Hyène brune.jpg','2023-04-14 12:08:44','images/Hyène brune.jpg',17,1),(17,'Hyène brune.jpg','2023-04-14 12:09:16','images\\Hyène brune.jpg',8,1),(18,'hyene rayee.jpg','2023-04-14 12:11:18','images/hyene rayee.jpg',17,1),(19,'hyene rayee.jpg','2023-04-14 12:12:11','images\\hyene rayee.jpg',8,1),(20,'Crocuta.jpg','2023-04-14 12:23:51','images/Crocuta.jpg',17,1);
+/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `liker`
+--
+
+DROP TABLE IF EXISTS `liker`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `liker` (
+  `users_idUser` int NOT NULL,
+  `images_idImage` int NOT NULL,
+  PRIMARY KEY (`users_idUser`,`images_idImage`),
+  KEY `fk_users_has_images_images1_idx` (`images_idImage`),
+  KEY `fk_users_has_images_users1_idx` (`users_idUser`),
+  CONSTRAINT `fk_users_has_images_images1` FOREIGN KEY (`images_idImage`) REFERENCES `images` (`idImage`),
+  CONSTRAINT `fk_users_has_images_users1` FOREIGN KEY (`users_idUser`) REFERENCES `users` (`idUser`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `liker`
+--
+
+LOCK TABLES `liker` WRITE;
+/*!40000 ALTER TABLE `liker` DISABLE KEYS */;
+INSERT INTO `liker` VALUES (9,1),(8,9),(17,9);
+/*!40000 ALTER TABLE `liker` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `statuts`
+--
+
+DROP TABLE IF EXISTS `statuts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `statuts` (
+  `idStatut` int NOT NULL AUTO_INCREMENT,
+  `nameStatut` varchar(45) NOT NULL,
+  PRIMARY KEY (`idStatut`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `statuts`
+--
+
+LOCK TABLES `statuts` WRITE;
+/*!40000 ALTER TABLE `statuts` DISABLE KEYS */;
+INSERT INTO `statuts` VALUES (-1,'corrupted'),(0,'private'),(1,'public'),(2,'delete');
+/*!40000 ALTER TABLE `statuts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tags`
+--
+
+DROP TABLE IF EXISTS `tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tags` (
+  `idTag` int NOT NULL AUTO_INCREMENT,
+  `nameTag` varchar(45) NOT NULL,
+  PRIMARY KEY (`idTag`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tags`
+--
+
+LOCK TABLES `tags` WRITE;
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+INSERT INTO `tags` VALUES (1,'soleil'),(2,'chat');
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `idUser` int NOT NULL AUTO_INCREMENT,
+  `pseudo` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `mail` varchar(45) NOT NULL,
+  `dateNaissance` date NOT NULL,
+  `dateInscription` datetime NOT NULL,
+  `coins` int DEFAULT NULL,
+  `autorisation` int DEFAULT NULL,
+  `statut_idStatut` int NOT NULL,
+  PRIMARY KEY (`idUser`),
+  KEY `fk_user_statut1_idx` (`statut_idStatut`),
+  CONSTRAINT `fk_user_statut1` FOREIGN KEY (`statut_idStatut`) REFERENCES `statuts` (`idStatut`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (8,'moi11','lol','lol@gmail.com','2023-04-05','2023-04-01 10:23:45',120,2,1),(9,'JKJ','mdr','mdr@gmail.com','2001-01-10','2023-04-01 10:23:45',10,1,0),(10,'moi','moi','moi@gmail.com','2000-12-05','2023-04-01 10:23:46',0,1,2),(11,'JKJ5','lol7','lol@gmail.com','2023-04-05','2023-04-04 19:30:36',0,1,0),(12,'JKJ10','lol3','lol@gmail.com','2023-04-12','2023-04-04 19:31:38',0,1,2),(13,'jk','lol2','lol@gmail.com','2023-04-13','2023-04-04 21:33:27',0,1,0),(14,'JKJmoi','lol5','lol@gmail.com','2023-03-29','2023-04-04 21:35:23',0,1,0),(15,'Asterix','lol','rip@gmail.com','2023-04-05','2023-04-09 17:35:31',0,1,0),(16,'Poto','lol','poto@gmail.com','2023-04-13','2023-04-14 11:37:02',2,1,1),(17,'Obelix','lol','obelix@gmail.com','2023-03-29','2023-04-14 11:40:37',0,1,0),(18,'ObelixPOPO','lol','dod@gmail.com','2023-03-28','2023-04-14 11:41:55',0,1,0);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-04-14 13:17:24

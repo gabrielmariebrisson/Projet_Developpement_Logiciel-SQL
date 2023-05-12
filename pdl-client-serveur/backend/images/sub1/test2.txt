@@ -1,0 +1,48 @@
+public static void equalizeHistogram(Planar<GrayU8> input, Planar<GrayU8> output) {
+
+    // Get the cumulative histograms for each channel
+    int[] cumulativeHistogramR = getCumulativeHistogram(input.getBand(0));
+    int[] cumulativeHistogramG = getCumulativeHistogram(input.getBand(1));
+    int[] cumulativeHistogramB = getCumulativeHistogram(input.getBand(2));
+
+    Planar<GrayU8> gray = input.createSameShape();
+    colorToGray(input, gray); 
+    int[] cumulativeHistogram = getCumulativeHistogram(gray.getBand(0));
+
+    for (int y = 0; y < input.height; ++y) {
+        for (int x = 0; x < input.width; ++x) {
+
+            // Get the pixel values for each channel
+            int r = input.getBand(0).get(x, y);
+            int g = input.getBand(1).get(x, y);
+            int b = input.getBand(2).get(x, y);
+
+            // Apply the histogram equalization for each channel
+            int rAfterOP = cumulativeHistogramR[r] * 255 / (input.width * input.height);
+            int gAfterOP = cumulativeHistogramG[g] * 255 / (input.width * input.height);
+            int bAfterOP = cumulativeHistogramB[b] * 255 / (input.width * input.height);
+
+            // Get the grayscale intensity value
+            int gl = gray.getBand(0).get(x, y);
+
+            // Apply the histogram equalization for grayscale
+            int glAfterOP = cumulativeHistogram[gl] * 255 / (gray.width * gray.height);
+
+            // Convert the pixel values to HSV
+            float[] hsv = new float[3];
+            rgbToHsv(rAfterOP, gAfterOP, bAfterOP, hsv);
+
+            // Modify the value channel of HSV proportionally to the equalized grayscale intensity
+            hsv[2] = (glAfterOP / 255.0f) * 100.0f;
+
+            // Convert the modified HSV value back to RGB
+            int[] rgb = new int[3];
+            hsvToRgb(hsv[0], hsv[1], hsv[2], rgb);
+
+            // Set the output pixel values
+            output.getBand(0).set(x, y, rgb[0]);
+            output.getBand(1).set(x, y, rgb[1]);
+            output.getBand(2).set(x, y, rgb[2]);
+        }
+    }
+}
