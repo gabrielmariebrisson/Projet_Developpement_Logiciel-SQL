@@ -21,6 +21,7 @@ Mot de passe : lol
 
 ## Base de données
 
+Création d'une base de données MySQL. Envoi de requêtes SQL.
 Pour accéder à la base de données, utilisez la commande suivante :
 mysql -u root -p
 
