@@ -21,11 +21,11 @@ Mot de passe : lol
 
 ## Base de données
 
-Création d'une base de données MySQL. Envoi de requêtes SQL.
-<br>
 Pour accéder à la base de données, utilisez la commande suivante :
 <br>
 mysql -u root -p
+<br>
+<img src="readme/sql.png" width="300px"> 
 
 ## Cahier des besoins
 Ce projet vise à développer une application de traitement d'image avec une architecture client-serveur. Le document présenté décrit les besoins nécessaires à la réalisation du projet.
@@ -35,7 +35,6 @@ Chaque groupe doit implémenter le fonctionnement central de l'application clien
 
 Extensions :
 Des suggestions d'extensions seront proposées en cours, telles que la répartition des charges entre client et serveur, l'amélioration de l'interface utilisateur, l'ajout de traitements d'image avancés et la généricité des algorithmes.
-Les extensions ont été faites par Clément Delmas et Gabriel Marie-brisson
 
 Serveur :
 
@@ -132,3 +131,8 @@ Veuillez vous référer au cahier des besoins complet pour plus de détails.
 <br>
 
 Assurez-vous de remplacer "readme" par le chemin réel vers les images dans votre référentiel GitHub.
+
+## Auteurs
+
+- Clement Delmas
+- Gabriel Marie-Brisson
