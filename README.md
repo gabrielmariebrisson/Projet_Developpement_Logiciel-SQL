@@ -32,6 +32,7 @@ Chaque groupe doit implémenter le fonctionnement central de l'application clien
 
 Extensions :
 Des suggestions d'extensions seront proposées en cours, telles que la répartition des charges entre client et serveur, l'amélioration de l'interface utilisateur, l'ajout de traitements d'image avancés et la généricité des algorithmes.
+Les extensions ont été faites par Clément Delmas et Gabriel Marie-brisson
 
 Serveur :
 
